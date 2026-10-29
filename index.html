@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172554"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="3D Cost"><meta name="mobile-web-app-capable" content="yes"><title>3D Print Cost Calculator</title>
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icons/icon-180.png"><link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--ink:#172033;--muted:#64748b;--line:#dbe2ea;--blue:#1d4ed8;--navy:#172554;--green:#15803d;--red:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink)}
+header{background:var(--navy);color:#fff;padding:18px max(16px,calc((100vw - 1200px)/2));display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:21px;margin:0}header p{margin:3px 0 0;color:#cbd5e1;font-size:13px}.wrap{max-width:1200px;margin:auto;padding:18px}
+nav{display:flex;gap:8px;overflow:auto;padding-bottom:12px}.tab{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:10px;white-space:nowrap;cursor:pointer;font-weight:650}.tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:17px;min-width:0}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-3{grid-column:span 3}
+h2{font-size:17px;margin:0 0 13px}h3{font-size:14px;margin:0 0 9px;color:var(--muted)}.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field label{font-size:12px;font-weight:700;color:#475569}.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #cbd5e1;border-radius:9px;padding:10px;background:white;font:inherit;color:var(--ink)}.field input:focus,.field select:focus{outline:2px solid #bfdbfe;border-color:var(--blue)}
+button,.button{font:inherit;font-weight:700;border:0;border-radius:9px;padding:10px 13px;background:var(--blue);color:#fff;cursor:pointer}.secondary{background:#e2e8f0;color:#1e293b}.danger{background:#fee2e2;color:#991b1b}.small{padding:6px 9px;font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.metric{background:#f8fafc;border:1px solid var(--line);padding:13px;border-radius:12px;min-width:0}.metric .label{font-size:12px;color:var(--muted)}.metric strong{display:block;font-size:clamp(16px,2vw,22px);margin-top:4px;overflow-wrap:anywhere}.good{color:var(--green)}.bad{color:var(--red)}.muted{color:var(--muted)}.note{background:#eff6ff;color:#1e40af;padding:11px;border-radius:10px;font-size:13px;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}td.num,th.num{text-align:right;white-space:nowrap}.tablewrap{overflow-x:auto}.empty{text-align:center;color:var(--muted);padding:25px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
+@media(max-width:800px){.span-8,.span-7,.span-6,.span-5,.span-4,.span-3{grid-column:span 12}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:12px}.card{padding:14px}}
+@media(max-width:420px){.fieldgrid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}header{padding:15px}.tab{padding:9px 11px}}
+</style></head>
+<body>
+<header><div><h1>🖨️ 3D Print Cost Calculator</h1><p>Tính giá vốn · Giá bán · Lợi nhuận · Quản lý vật liệu và sản phẩm</p></div><div><button id="exportBtn" class="secondary">Xuất dữ liệu JSON</button> <button id="importBtn" class="secondary">Nhập dữ liệu</button><input id="importFile" type="file" accept="application/json" hidden></div></header>
+<div class="wrap">
+<nav>
+<button class="tab active" data-tab="calculator">Tính giá</button><button class="tab" data-tab="products">Sản phẩm</button><button class="tab" data-tab="materials">Vật liệu</button><button class="tab" data-tab="settings">Cài đặt</button>
+</nav>
+<section id="calculator" class="panel active">
+<div class="grid">
+<div class="card span-7"><h2>Thông tin sản phẩm & thông số in</h2>
+<div class="fieldgrid">
+<div class="field"><label>Tên sản phẩm</label><input id="productName" placeholder="Ví dụ: Móc khóa tên riêng"></div>
+<div class="field"><label>Mã / SKU</label><input id="sku" placeholder="MK-001"></div>
+<div class="field"><label>Vật liệu / cuộn filament</label><select id="materialSelect"></select></div>
+<div class="field"><label>Khối lượng filament (g)</label><input id="grams" type="number" min="0" step="0.1" value="35"></div>
+<div class="field"><label>Thời gian in (giờ)</label><input id="hours" type="number" min="0" step="0.1" value="2.5"></div>
+<div class="field"><label>Công suất trung bình (W)</label><input id="watts" type="number" min="0" value="120"></div>
+<div class="field"><label>Chi phí phụ / sản phẩm (đ)</label><input id="extras" type="number" min="0" value="1000"></div>
+<div class="field"><label>Nhân công / sản phẩm (đ)</label><input id="labor" type="number" min="0" value="2000"></div>
+<div class="field"><label>Khấu hao máy (đ/giờ)</label><input id="depreciation" type="number" min="0" value="2000"></div>
+<div class="field"><label>Tỷ lệ lỗi / hao hụt (%)</label><input id="failure" type="number" min="0" max="90" step="0.5" value="5"></div>
+<div class="field"><label>Số lượng sản xuất</label><input id="quantity" type="number" min="1" step="1" value="1"></div>
+<div class="field"><label>Phí cố định / đơn hàng (đ)</label><input id="fixedOrderFee" type="number" min="0" value="0"></div>
+</div>
+<div class="actions"><button id="saveProductBtn">Lưu vào danh sách sản phẩm</button><button id="resetCalcBtn" class="secondary">Xóa form</button></div>
+<div class="note">Mẹo: nhập khối lượng và thời gian từ Bambu Studio. Công suất điện nên dùng mức trung bình thực tế, không phải công suất cực đại.</div>
+</div>
+<div class="card span-5"><h2>Phí bán hàng & mục tiêu</h2>
+<div class="fieldgrid">
+<div class="field"><label>Phí sàn (%)</label><input id="platformFee" type="number" min="0" max="100" step="0.1" value="10"></div>
+<div class="field"><label>Phí thanh toán / dịch vụ (%)</label><input id="paymentFee" type="number" min="0" max="100" step="0.1" value="5"></div>
+<div class="field"><label>Quảng cáo / voucher (% giá bán)</label><input id="adsFee" type="number" min="0" max="100" step="0.1" value="0"></div>
+<div class="field"><label>Thuế / chi phí theo doanh thu (%)</label><input id="taxFee" type="number" min="0" max="100" step="0.1" value="0"></div>
+<div class="field"><label>Lợi nhuận mục tiêu (% giá bán)</label><input id="targetMargin" type="number" min="0" max="90" step="1" value="30"></div>
+<div class="field"><label>Giá bán thực tế (đ, tùy chọn)</label><input id="actualPrice" type="number" min="0" placeholder="Để trống = giá đề xuất"></div>
+</div>
+<div class="note">Phí sàn thay đổi theo ngành hàng, chương trình và thời điểm. Hãy nhập tổng tỷ lệ thực tế của tài khoản; app không tự lấy phí Shopee trực tuyến.</div>
+</div>
+<div class="card span-12"><h2>In nhiều màu — Bambu Lab A1 Combo + AMS Lite</h2>
+<div class="fieldgrid">
+<div class="field"><label>Cách nhập vật liệu</label><select id="filamentMode"><option value="detail">Tính chi tiết từng màu + purge + prime tower + support</option><option value="slicer">Dùng tổng gram từ Bambu Studio (đã gồm purge / tower / support)</option></select></div>
+<div class="field"><label>Hao hụt vật liệu bổ sung (%)</label><input id="materialWaste" type="number" min="0" max="100" step="0.5" value="2"></div>
+<div class="field"><label>Gram purge / flushing</label><input id="purgeGrams" type="number" min="0" step="0.1" value="8"></div>
+<div class="field"><label>Vật liệu dùng cho purge</label><select id="purgeMaterial"></select></div>
+<div class="field"><label>Gram prime tower</label><input id="towerGrams" type="number" min="0" step="0.1" value="3"></div>
+<div class="field"><label>Vật liệu dùng cho prime tower</label><select id="towerMaterial"></select></div>
+<div class="field"><label>Gram support</label><input id="supportGrams" type="number" min="0" step="0.1" value="0"></div>
+<div class="field"><label>Vật liệu support</label><select id="supportMaterial"></select></div>
+</div>
+<div id="detailFilamentBlock" style="margin-top:14px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><h3 style="margin:0">Filament nằm trong mô hình — theo từng màu</h3><button id="addColorBtn" class="secondary">+ Thêm màu</button></div>
+<p class="muted" style="font-size:12px">Nhập gram theo từng cuộn/màu từ Bambu Studio. Các dòng màu này không bao gồm purge, prime tower hoặc support; nhập chúng ở các ô riêng bên trên.</p>
+<div class="tablewrap"><table><thead><tr><th>Màu / cuộn filament</th><th class="num">Gram</th><th class="num">Giá/g</th><th class="num">Thành tiền</th><th></th></tr></thead><tbody id="colorRows"></tbody></table></div></div>
+<div class="note">Nếu chọn “Dùng tổng gram từ Bambu Studio”, hãy nhập tổng vật liệu vào ô “Khối lượng filament” ở phần thông tin sản phẩm. App sẽ không cộng purge, prime tower và support lần nữa. Tỷ lệ hao hụt bổ sung vẫn được áp dụng riêng.</div>
+<div class="card" style="margin-top:14px;background:#f8fafc"><h2>Nhập báo cáo từ Bambu Studio</h2>
+<p class="muted" style="font-size:13px">Chọn file G-code, báo cáo TXT/CSV/JSON hoặc file dự án 3MF đã slice. App đọc dữ liệu ngay trên trình duyệt, hiển thị thông tin nhận diện trước khi áp dụng. Cấu trúc file có thể khác nhau theo phiên bản Bambu Studio.</p>
+<div class="fieldgrid"><div class="field"><label>File báo cáo / G-code / 3MF</label><input id="slicerFile" type="file" accept=".gcode,.gcode.3mf,.3mf,.txt,.csv,.json,.log"></div><div class="field"><label>Hoặc dán nội dung báo cáo</label><textarea id="slicerPaste" rows="3" placeholder="Dán phần thông tin filament / thời gian từ Bambu Studio..."></textarea></div></div>
+<div class="actions"><button id="parseSlicerBtn">Đọc và xem trước</button><button id="applySlicerBtn" class="secondary" disabled>Áp dụng số liệu vào form</button></div>
+<div id="slicerImportStatus" class="note" style="display:none" aria-live="polite"></div>
+<div id="slicerPreview" class="tablewrap" style="display:none;margin-top:10px"></div>
+</div>
+</div>
+<div class="card span-12"><h2>Kết quả tính toán</h2><div class="metrics">
+<div class="metric"><div class="label">Giá vốn / sản phẩm</div><strong id="costOut">—</strong></div>
+<div class="metric"><div class="label">Giá bán đề xuất</div><strong id="priceOut">—</strong></div>
+<div class="metric"><div class="label">Lợi nhuận / sản phẩm</div><strong id="profitOut">—</strong></div>
+<div class="metric"><div class="label">Biên lợi nhuận thực tế</div><strong id="marginOut">—</strong></div>
+<div class="metric"><div class="label">Chi phí filament</div><strong id="filamentOut">—</strong></div>
+<div class="metric"><div class="label">Chi phí điện</div><strong id="electricOut">—</strong></div>
+<div class="metric"><div class="label">Tổng chi phí đơn</div><strong id="orderOut">—</strong></div>
+<div class="metric"><div class="label">Lợi nhuận toàn đơn</div><strong id="totalProfitOut">—</strong></div>
+</div>
+<div class="tablewrap" style="margin-top:14px"><table><tbody id="breakdown"></tbody></table></div>
+<div class="actions"><button id="exportCsvBtn" class="secondary">Xuất bảng tính CSV</button></div>
+</div></div></section>
+<section id="products" class="panel"><div class="card"><h2>Sản phẩm đã lưu</h2><p class="muted">Lưu trong trình duyệt hiện tại. Chọn “Nạp” để đưa thông số vào máy tính.</p><div class="tablewrap"><table><thead><tr><th>Tên / SKU</th><th>Vật liệu</th><th class="num">Gram</th><th class="num">Giờ in</th><th class="num">Giá vốn</th><th class="num">Giá đề xuất</th><th>Thao tác</th></tr></thead><tbody id="productsTable"></tbody></table></div></div></section>
+<section id="materials" class="panel"><div class="grid"><div class="card span-5"><h2>Thêm / sửa cuộn filament</h2><input id="materialId" type="hidden"><div class="fieldgrid">
+<div class="field"><label>Tên vật liệu / màu</label><input id="matName" placeholder="PLA Basic - Trắng"></div>
+<div class="field"><label>Loại</label><select id="matType"><option>PLA</option><option>PETG</option><option>ABS</option><option>ASA</option><option>TPU</option><option>PA / Nylon</option><option>Khác</option></select></div>
+<div class="field"><label>Giá cuộn (đ)</label><input id="matPrice" type="number" min="0" value="350000"></div>
+<div class="field"><label>Khối lượng tịnh (g)</label><input id="matWeight" type="number" min="1" value="1000"></div>
+</div><div class="actions"><button id="saveMaterialBtn">Lưu vật liệu</button><button id="cancelMaterialBtn" class="secondary">Làm mới</button></div></div>
+<div class="card span-7"><h2>Kho vật liệu</h2><div class="tablewrap"><table><thead><tr><th>Vật liệu</th><th class="num">Giá/cuộn</th><th class="num">Giá/g</th><th>Thao tác</th></tr></thead><tbody id="materialsTable"></tbody></table></div></div></div></section>
+<section id="settings" class="panel"><div class="grid"><div class="card span-6"><h2>Cài đặt chung</h2><div class="fieldgrid">
+<div class="field"><label>Giá điện (đ/kWh)</label><input id="electricityRate" type="number" min="0" value="3000"></div>
+<div class="field"><label>Máy in</label><input value="Bambu Lab A1 Combo" disabled></div>
+</div><div class="actions"><button id="saveSettingsBtn">Lưu cài đặt</button></div><p class="muted">Giá điện dùng để tính: công suất (W) × thời gian (giờ) ÷ 1000 × giá điện.</p></div>
+<div class="card span-6"><h2>Sao lưu & riêng tư</h2><p>Dữ liệu được lưu cục bộ trong trình duyệt bằng localStorage; không gửi lên máy chủ. Nếu xóa dữ liệu trình duyệt hoặc đổi trình duyệt/máy tính, dữ liệu có thể mất.</p><div class="actions"><button id="exportBtn2" class="secondary">Tải bản sao lưu JSON</button><button id="clearDataBtn" class="danger">Xóa toàn bộ dữ liệu</button></div></div></div></section>
+<footer>3D Print Cost Calculator · PWA · Dữ liệu lưu cục bộ trên thiết bị · Phí bán hàng và chi phí do người dùng nhập.<br><span id="pwaStatus">Đang kiểm tra chế độ ngoại tuyến…</span></footer>
+</div>
+<script src="app.js"></script><script>if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(()=>{const e=document.getElementById("pwaStatus");if(e)e.textContent="Có hỗ trợ lưu bản app để dùng ngoại tuyến sau lần mở đầu tiên."}).catch(()=>{const e=document.getElementById("pwaStatus");if(e)e.textContent="Chưa bật được chế độ ngoại tuyến trên môi trường hiện tại."}));}else{const e=document.getElementById("pwaStatus");if(e)e.textContent="Để cài PWA và dùng ngoại tuyến, hãy mở app qua HTTPS hoặc localhost."}</script>
+</body></html>
