@@ -1,7 +1,7 @@
-const CACHE_NAME = '3d-print-cost-pwa-v2';
+const CACHE_NAME = '3d-print-cost-pwa-v6-cloud-sync';
 const APP_SHELL = [
   './', './index.html', './app.js', './manifest.json',
-  './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png'
+  './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './supabase-config.js', './sync.js'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));

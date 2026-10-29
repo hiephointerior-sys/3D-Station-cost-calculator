@@ -17,6 +17,69 @@ table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;p
 footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 @media(max-width:800px){.span-8,.span-7,.span-6,.span-5,.span-4,.span-3{grid-column:span 12}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:12px}.card{padding:14px}}
 @media(max-width:420px){.fieldgrid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}header{padding:15px}.tab{padding:9px 11px}}
+
+/* Visual refresh: compact inputs, strong price hierarchy, mobile friendly */
+:root{--bg:#eef2f7;--card:#fff;--ink:#152238;--muted:#64748b;--line:#d8e1ed;--blue:#2457d6;--navy:#101f43;--green:#087443;--red:#b42318}
+body{background:linear-gradient(180deg,#edf3fb 0,#f7f9fc 260px);color:var(--ink)}
+header{background:linear-gradient(120deg,#101f43,#1d3b70);box-shadow:0 8px 24px #10254b20}
+.wrap{max-width:1320px;padding:20px}
+nav{position:sticky;top:0;z-index:5;background:#f4f7fbec;backdrop-filter:blur(12px);padding:10px 0 14px}
+.tab{box-shadow:0 2px 5px #10254b08}.tab.active{box-shadow:0 5px 12px #2457d633}
+.card{border-radius:18px;box-shadow:0 5px 20px #12284a0a;padding:20px}
+.card h2{font-size:17px;letter-spacing:-.02em;color:#16294a}
+.fieldgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.field label{font-size:12px;color:#42526b;line-height:1.35}
+.field input,.field select,.field textarea{border-color:#cbd6e5;border-radius:10px;padding:11px 12px;background:#fbfdff}
+.field input:focus,.field select:focus{outline:3px solid #dbeafe;border-color:#4776e6}
+.metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.metric{border-radius:14px;padding:15px;background:#f8fafc}
+.metric .label{font-weight:650;line-height:1.35}
+.metric strong{font-size:clamp(17px,1.7vw,24px);letter-spacing:-.03em}
+/* Highlight the final selling-price cards */
+.metric:has(#priceOut),.metric:has(#retailPriceOut),.metric:has(#wholesalePriceOut){background:linear-gradient(145deg,#eaf2ff,#f4f7ff);border:1px solid #b8cdfd;box-shadow:inset 0 0 0 1px #fff}
+.metric:has(#priceOut) strong,.metric:has(#retailPriceOut) strong,.metric:has(#wholesalePriceOut) strong{color:#1748b5;font-size:clamp(20px,2.1vw,29px)}
+.metric:has(#costOut){background:#f0fdf4;border-color:#b7e4c7}.metric:has(#profitOut){background:#ecfdf5;border-color:#a7e5c5}
+.price-banner{background:linear-gradient(120deg,#163b8c,#2457d6);color:#fff;border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 12px 26px #2457d62b}
+.price-banner .eyebrow{font-size:12px;color:#dbeafe;font-weight:750;text-transform:uppercase;letter-spacing:.08em}
+.price-banner strong{display:block;font-size:clamp(28px,4vw,42px);line-height:1.15;margin:7px 0;letter-spacing:-.04em;overflow-wrap:anywhere}
+.price-banner p{margin:0;color:#dbeafe;font-size:13px}
+.section-kicker{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#6b7b94;margin-bottom:8px}
+.input-hub{border:1px solid #cbd9ef;background:linear-gradient(180deg,#fff,#f9fbff)}
+.input-hub h2{font-size:19px}
+.labor-choice{background:#f1f5f9;border:1px solid #dbe3ef;border-radius:13px;padding:13px;margin:12px 0}
+.labor-choice .fieldgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.note{border:1px solid #dbeafe;background:#eff6ff;border-radius:12px}
+button{transition:transform .12s ease,box-shadow .12s ease}button:active{transform:translateY(1px)}
+@media(max-width:800px){.wrap{padding:10px}.card{padding:14px}.fieldgrid,.labor-choice .fieldgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}nav{top:0}.price-banner{padding:17px}}
+@media(max-width:460px){.fieldgrid,.labor-choice .fieldgrid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:11px}.metric strong{font-size:17px}header{align-items:flex-start}header>div:last-child{display:flex;gap:6px;flex-wrap:wrap}.price-banner strong{font-size:29px}}
+
+.product-image-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;padding:14px;background:#f7faff;border:1px dashed #b9c9e2;border-radius:15px;margin:10px 0 16px}
+.product-image-preview{width:150px;height:125px;border-radius:12px;background:#eaf0f8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;overflow:hidden;color:#718096;text-align:center;border:1px solid #d7e1ef}
+.product-image-preview span{font-size:28px}.product-image-preview small{font-size:11px}.product-image-preview img{width:100%;height:100%;object-fit:contain;background:white}
+.product-image-controls{min-width:0}.cost-analysis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.cost-chart-card{min-width:0}.chart-layout{display:grid;grid-template-columns:minmax(160px,1fr) minmax(150px,1fr);align-items:center;gap:10px}.chart-layout canvas{width:100%;max-width:300px;height:auto;display:block;margin:auto}.cost-legend{display:flex;flex-direction:column;gap:9px}.legend-item{display:grid;grid-template-columns:10px minmax(0,1fr);gap:8px;font-size:12px;align-items:start}.legend-dot{width:10px;height:10px;border-radius:3px;margin-top:3px}.legend-item strong{display:block;font-size:12px}.legend-item small{display:block;color:var(--muted);margin-top:1px}.cost-summary{display:flex;flex-direction:column;gap:10px}.summary-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px;font-size:13px}.summary-line strong{text-align:right;white-space:nowrap}.summary-line.total{font-weight:800;color:#1748b5;font-size:15px}
+@media(max-width:760px){.cost-analysis-grid{grid-template-columns:1fr}.chart-layout{grid-template-columns:minmax(130px,.8fr) minmax(140px,1fr)}.product-image-row{grid-template-columns:110px minmax(0,1fr);gap:12px}.product-image-preview{width:110px;height:105px}}
+@media(max-width:420px){.chart-layout{grid-template-columns:1fr}.chart-layout canvas{max-width:230px}.cost-legend{display:grid;grid-template-columns:1fr 1fr}.product-image-row{grid-template-columns:1fr}.product-image-preview{width:100%;height:170px}}
+
+
+/* Clear two-option labor calculator and polished mobile layout */
+.labor-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.labor-heading .section-kicker{margin-bottom:4px}
+.mode-hint{font-size:11px;color:#718096;background:#fff;border:1px solid #dbe3ef;border-radius:999px;padding:5px 9px}
+.labor-mode-toggle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.labor-mode-btn{display:flex;align-items:center;gap:11px;text-align:left;background:#fff;color:#24344d;border:1px solid #d5deeb;border-radius:13px;padding:13px;min-width:0;box-shadow:none}
+.labor-mode-btn .mode-icon{display:grid;place-items:center;flex:0 0 40px;height:40px;border-radius:11px;background:#edf2fa;font-size:20px}
+.labor-mode-btn strong,.labor-mode-btn small{display:block}.labor-mode-btn strong{font-size:14px}.labor-mode-btn small{font-size:11px;font-weight:500;color:#64748b;margin-top:2px}
+.labor-mode-btn.active{background:linear-gradient(135deg,#eaf2ff,#f8fbff);border:2px solid #2457d6;padding:12px;box-shadow:0 4px 12px #2457d61a}
+.labor-mode-btn.active .mode-icon{background:#dbeafe}
+.mode-select-accessible{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.input-hub .fieldgrid{align-items:start}
+.product-image-row{background:linear-gradient(135deg,#f8fbff,#f0f5fd);border-style:solid}
+.product-image-controls input[type=file]{font-size:13px}
+.cost-chart-card{overflow:hidden}
+@media(max-width:520px){.labor-mode-toggle{grid-template-columns:1fr}.labor-mode-btn{padding:11px}.labor-mode-btn.active{padding:10px}.mode-hint{display:none}}
+
+
+.sync-status{padding:12px;border:1px solid var(--line);border-radius:10px;background:#f8fafc;font-size:13px;line-height:1.5;overflow-wrap:anywhere}.sync-status[data-state="ok"]{background:#ecfdf3;border-color:#86efac;color:#166534}.sync-status[data-state="error"]{background:#fef2f2;border-color:#fca5a5;color:#991b1b}.sync-status[data-state="busy"]{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
 </style></head>
 <body>
 <header><div><h1>🖨️ 3D Print Cost Calculator</h1><p>Tính giá vốn · Giá bán · Lợi nhuận · Quản lý vật liệu và sản phẩm</p></div><div><button id="exportBtn" class="secondary">Xuất dữ liệu JSON</button> <button id="importBtn" class="secondary">Nhập dữ liệu</button><input id="importFile" type="file" accept="application/json" hidden></div></header>
@@ -26,7 +89,11 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 </nav>
 <section id="calculator" class="panel active">
 <div class="grid">
-<div class="card span-7"><h2>Thông tin sản phẩm & thông số in</h2>
+<div class="card span-12 input-hub"><div class="section-kicker">01 · NHẬP LIỆU TẠI MỘT NƠI</div><h2>Thông tin sản phẩm & chi phí sản xuất</h2><p class="muted" style="margin:-5px 0 12px;font-size:13px">Nhập ảnh, vật liệu, thời gian in và các chi phí tại khu vực này. Giá bán và biểu đồ sẽ tự cập nhật.</p>
+<div class="product-image-row">
+<div class="product-image-preview" id="productImagePreview"><span>📷</span><small>Chưa có ảnh sản phẩm</small></div>
+<div class="product-image-controls"><div class="field"><label>Hình ảnh sản phẩm</label><input id="productImageFile" type="file" accept="image/*"></div><p class="muted" style="font-size:12px;margin:6px 0">Ảnh được thu nhỏ để tiết kiệm bộ nhớ và lưu cùng sản phẩm trên thiết bị này.</p><button id="removeProductImageBtn" type="button" class="secondary small">Xóa ảnh</button></div>
+</div>
 <div class="fieldgrid">
 <div class="field"><label>Tên sản phẩm</label><input id="productName" placeholder="Ví dụ: Móc khóa tên riêng"></div>
 <div class="field"><label>Mã / SKU</label><input id="sku" placeholder="MK-001"></div>
@@ -34,18 +101,25 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div class="field"><label>Khối lượng filament (g)</label><input id="grams" type="number" min="0" step="0.1" value="35"></div>
 <div class="field"><label>Thời gian in (giờ)</label><input id="hours" type="number" min="0" step="0.1" value="2.5"></div>
 <div class="field"><label>Công suất trung bình (W)</label><input id="watts" type="number" min="0" value="1500"></div>
-<div class="field"><label>Chi phí phụ / sản phẩm (đ)</label><input id="extras" type="number" min="0" value="3500"></div>
-<div class="field"><label>Nhân công / sản phẩm (đ)</label><input id="labor" type="number" min="0" value="1000"></div>
 <div class="field"><label>Khấu hao máy (đ/giờ)</label><input id="depreciation" type="number" min="0" value="2400"></div>
 <div class="field"><label>Tỷ lệ lỗi / hao hụt (%)</label><input id="failure" type="number" min="0" max="90" step="0.5" value="10"></div>
 <div class="field"><label>Số lượng sản xuất</label><input id="quantity" type="number" min="1" step="1" value="1"></div>
+<div class="field"><label>Chi phí phụ / sản phẩm (đ)</label><input id="extras" type="number" min="0" value="3500"></div>
 <div class="field"><label>Phí cố định / đơn hàng (đ)</label><input id="fixedOrderFee" type="number" min="0" value="3000"></div>
 </div>
-<div class="actions"><button id="saveProductBtn">Lưu vào danh sách sản phẩm</button><button id="resetCalcBtn" class="secondary">Xóa form</button></div>
-<div class="note">Mẹo: nhập khối lượng và thời gian từ Bambu Studio. Công suất điện nên dùng mức trung bình thực tế, không phải công suất cực đại.</div>
+<div class="labor-choice"><div class="labor-heading"><div><div class="section-kicker">CHỌN CÁCH TÍNH</div><h3 style="margin-bottom:4px;color:#1e3a5f">👷 Chi phí nhân công</h3></div><span class="mode-hint">Chọn một phương pháp</span></div>
+<div class="labor-mode-toggle" role="group" aria-label="Phương pháp tính nhân công">
+<button type="button" class="labor-mode-btn active" data-labor-choice="time" aria-pressed="true"><span class="mode-icon">⏱️</span><span><strong>Theo thời gian</strong><small>Đơn giá giờ × số phút</small></span></button>
+<button type="button" class="labor-mode-btn" data-labor-choice="product" aria-pressed="false"><span class="mode-icon">📦</span><span><strong>Theo sản phẩm</strong><small>Nhập chi phí cố định / cái</small></span></button>
 </div>
-<div class="card span-5"><h2>Phí bán hàng & mục tiêu</h2>
 <div class="fieldgrid">
+<div class="field mode-select-accessible"><label for="laborMode">Phương pháp tính</label><select id="laborMode"><option value="time">Theo thời gian làm việc</option><option value="product">Theo giá cố định / sản phẩm</option></select></div>
+<div class="field" id="laborMinutesWrap"><label>Thời gian thao tác / hậu kỳ (phút)</label><input id="laborMinutes" type="number" min="0" step="1" value="5"></div>
+<div class="field" id="laborRateWrap"><label>Đơn giá nhân công (đ/giờ)</label><input id="laborRateInline" type="number" min="0" step="500" value="12000"></div>
+<div class="field" id="laborProductWrap" style="display:none"><label>Nhân công cố định / sản phẩm (đ)</label><input id="labor" type="number" min="0" value="1000"></div>
+<div class="field"><label>Chi phí nhân công tự tính (đ/sản phẩm)</label><input id="laborPreview" type="text" value="1.000 ₫" readonly></div>
+</div><p class="muted" style="font-size:12px;margin:9px 0 0">Chọn theo thời gian để tính đơn giá giờ × số phút / 60; chọn theo sản phẩm để nhập trực tiếp mức tiền cho mỗi sản phẩm.</p></div>
+<div class="section-kicker" style="margin-top:18px">PHÍ BÁN HÀNG & MỤC TIÊU LỢI NHUẬN</div><div class="fieldgrid">
 <div class="field"><label>Phí sàn (%)</label><input id="platformFee" type="number" min="0" max="100" step="0.1" value="9"></div>
 <div class="field"><label>Phí thanh toán / dịch vụ (%)</label><input id="paymentFee" type="number" min="0" max="100" step="0.1" value="0"></div>
 <div class="field"><label>Quảng cáo / voucher (% giá bán)</label><input id="adsFee" type="number" min="0" max="100" step="0.1" value="0"></div>
@@ -53,7 +127,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div class="field"><label>Lợi nhuận mục tiêu (% giá bán)</label><input id="targetMargin" type="number" min="0" max="90" step="1" value="20"></div>
 <div class="field"><label>Giá bán thực tế (đ, tùy chọn)</label><input id="actualPrice" type="number" min="0" placeholder="Để trống = giá đề xuất"></div>
 </div>
-<div class="note">Phí sàn thay đổi theo ngành hàng, chương trình và thời điểm. Hãy nhập tổng tỷ lệ thực tế của tài khoản; app không tự lấy phí Shopee trực tuyến.</div>
+<div class="actions"><button id="saveProductBtn">💾 Lưu sản phẩm</button><button id="resetCalcBtn" class="secondary">Xóa form</button></div>
+<div class="note">Nhập thông số chính tại khu vực này. Các thông số nhiều màu, purge, prime tower, support và báo cáo Bambu Studio nằm ngay bên dưới. Chi phí mặc định có thể chỉnh trong tab Cài đặt.</div>
 </div>
 <div class="card span-12"><h2>In nhiều màu — Bambu Lab A1 Combo + AMS Lite</h2>
 <div class="fieldgrid">
@@ -78,7 +153,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div id="slicerPreview" class="tablewrap" style="display:none;margin-top:10px"></div>
 </div>
 </div>
-<div class="card span-12"><h2>Kết quả tính toán</h2><div class="metrics">
+<div class="card span-12"><div class="section-kicker">02 · KẾT QUẢ TỰ ĐỘNG</div><h2>Giá vốn, giá bán & lợi nhuận</h2><div class="price-banner"><div class="eyebrow">Giá bán đề xuất trên sàn</div><strong id="heroPriceOut">—</strong><p>Đã tính phí bán hàng, phí cố định và biên lợi nhuận mục tiêu.</p></div><div class="metrics">
 <div class="metric"><div class="label">Giá vốn / sản phẩm</div><strong id="costOut">—</strong></div>
 <div class="metric"><div class="label">Giá bán đề xuất</div><strong id="priceOut">—</strong></div>
 <div class="metric"><div class="label">Lợi nhuận / sản phẩm</div><strong id="profitOut">—</strong></div>
@@ -87,6 +162,10 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div class="metric"><div class="label">Chi phí điện</div><strong id="electricOut">—</strong></div>
 <div class="metric"><div class="label">Tổng chi phí đơn</div><strong id="orderOut">—</strong></div>
 <div class="metric"><div class="label">Lợi nhuận toàn đơn</div><strong id="totalProfitOut">—</strong></div><div class="metric"><div class="label">Giá bán lẻ (biên mục tiêu 20%)</div><strong id="retailPriceOut">—</strong></div><div class="metric"><div class="label">Giá bán sỉ (biên mục tiêu 8%)</div><strong id="wholesalePriceOut">—</strong></div>
+</div>
+<div class="cost-analysis-grid">
+<div class="card cost-chart-card"><h2>📊 Cơ cấu giá vốn</h2><p class="muted" style="font-size:12px;margin-top:-6px">Tỷ trọng từng nhóm chi phí trên một sản phẩm.</p><div class="chart-layout"><canvas id="costPieChart" width="320" height="320" aria-label="Biểu đồ bánh cơ cấu chi phí"></canvas><div id="costLegend" class="cost-legend"></div></div></div>
+<div class="card cost-chart-card"><h2>🧾 Tóm tắt chi phí</h2><div id="costSummary" class="cost-summary"></div></div>
 </div>
 <div class="tablewrap" style="margin-top:14px"><table><tbody id="breakdown"></tbody></table></div>
 <div class="actions"><button id="exportCsvBtn" class="secondary">Xuất bảng tính CSV</button></div>
@@ -103,8 +182,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div class="field"><label>Giá điện (đ/kWh)</label><input id="electricityRate" type="number" min="0" value="3000"></div><div class="field"><label>Biên lợi nhuận bán lẻ (%)</label><input id="retailMargin" type="number" min="0" max="90" value="20"></div><div class="field"><label>Biên lợi nhuận bán sỉ (%)</label><input id="wholesaleMargin" type="number" min="0" max="90" value="8"></div><div class="field"><label>Giá máy (đ)</label><input id="machinePrice" type="number" min="0" value="12000000"></div><div class="field"><label>Tuổi thọ máy (giờ in)</label><input id="machineLifetime" type="number" min="1" value="5000"></div><div class="field"><label>Lương nhân công (đ/giờ)</label><input id="laborRate" type="number" min="0" value="12000"></div><div class="field"><label>Thời gian hậu kỳ (phút)</label><input id="postMinutes" type="number" min="0" value="5"></div><div class="field"><label>Vật tư phụ (đ/sản phẩm)</label><input id="consumablesCost" type="number" min="0" value="2500"></div><div class="field"><label>Bao bì (đ/sản phẩm)</label><input id="packagingCost" type="number" min="0" value="1000"></div>
 <div class="field"><label>Máy in</label><input value="Bambu Lab A1 Combo" disabled></div>
 </div><div class="actions"><button id="saveSettingsBtn">Lưu cài đặt</button><button id="applyDefaultsBtn" class="secondary">Áp dụng mặc định vào form tính</button></div><p class="muted">Giá điện dùng để tính: công suất (W) × thời gian (giờ) ÷ 1000 × giá điện.</p></div>
+<div class="card span-6" id="cloudSyncCard"><h2>☁️ Đồng bộ PC & điện thoại</h2><p class="muted">Đăng nhập cùng tài khoản trên các thiết bị để đồng bộ sản phẩm, vật liệu, cài đặt và ảnh. Dữ liệu vẫn được lưu cục bộ để dùng khi mất mạng.</p><div class="fieldgrid"><div class="field"><label for="syncEmail">Email</label><input id="syncEmail" type="email" autocomplete="username" placeholder="ban@example.com"></div><div class="field"><label for="syncPassword">Mật khẩu</label><input id="syncPassword" type="password" autocomplete="current-password" placeholder="Ít nhất 8 ký tự"></div></div><div class="actions"><button id="syncSignInBtn">Đăng nhập</button><button id="syncSignUpBtn" class="secondary">Tạo tài khoản</button><button id="syncSignOutBtn" class="secondary" hidden>Đăng xuất</button></div><div id="syncStatus" class="sync-status" role="status" aria-live="polite">Chưa cấu hình Supabase. Cần nhập thông tin dự án trong supabase-config.js.</div><div class="actions"><button id="syncNowBtn" class="secondary" disabled>Đồng bộ ngay</button><button id="syncPullBtn" class="secondary" disabled>Tải dữ liệu cloud về</button></div><p class="muted" style="font-size:12px">Lần đầu đăng nhập: dữ liệu trên thiết bị sẽ được hợp nhất với cloud. Không chia sẻ file cấu hình chứa khóa bí mật; chỉ dùng Publishable/anon key ở trình duyệt.</p></div>
 <div class="card span-6"><h2>Sao lưu & riêng tư</h2><p>Dữ liệu được lưu cục bộ trong trình duyệt bằng localStorage; không gửi lên máy chủ. Nếu xóa dữ liệu trình duyệt hoặc đổi trình duyệt/máy tính, dữ liệu có thể mất.</p><div class="actions"><button id="exportBtn2" class="secondary">Tải bản sao lưu JSON</button><button id="clearDataBtn" class="danger">Xóa toàn bộ dữ liệu</button></div></div></div></section>
 <footer>3D Print Cost Calculator · PWA · Dữ liệu lưu cục bộ trên thiết bị · Phí bán hàng và chi phí do người dùng nhập.<br><span id="pwaStatus">Đang kiểm tra chế độ ngoại tuyến…</span></footer>
 </div>
-<script src="app.js"></script><script>if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(()=>{const e=document.getElementById("pwaStatus");if(e)e.textContent="Có hỗ trợ lưu bản app để dùng ngoại tuyến sau lần mở đầu tiên."}).catch(()=>{const e=document.getElementById("pwaStatus");if(e)e.textContent="Chưa bật được chế độ ngoại tuyến trên môi trường hiện tại."}));}else{const e=document.getElementById("pwaStatus");if(e)e.textContent="Để cài PWA và dùng ngoại tuyến, hãy mở app qua HTTPS hoặc localhost."}</script>
+<script src="app.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="sync.js"></script><script>if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(()=>{const e=document.getElementById("pwaStatus");if(e)e.textContent="Có hỗ trợ lưu bản app để dùng ngoại tuyến sau lần mở đầu tiên."}).catch(()=>{const e=document.getElementById("pwaStatus");if(e)e.textContent="Chưa bật được chế độ ngoại tuyến trên môi trường hiện tại."}));}else{const e=document.getElementById("pwaStatus");if(e)e.textContent="Để cài PWA và dùng ngoại tuyến, hãy mở app qua HTTPS hoặc localhost."}</script>
 </body></html>
