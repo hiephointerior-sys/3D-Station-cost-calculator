@@ -1,4 +1,4 @@
-const CACHE_NAME = '3d-print-cost-pwa-v1';
+const CACHE_NAME = '3d-print-cost-pwa-v2';
 const APP_SHELL = [
   './', './index.html', './app.js', './manifest.json',
   './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png'

@@ -33,24 +33,24 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div class="field"><label>Vật liệu / cuộn filament</label><select id="materialSelect"></select></div>
 <div class="field"><label>Khối lượng filament (g)</label><input id="grams" type="number" min="0" step="0.1" value="35"></div>
 <div class="field"><label>Thời gian in (giờ)</label><input id="hours" type="number" min="0" step="0.1" value="2.5"></div>
-<div class="field"><label>Công suất trung bình (W)</label><input id="watts" type="number" min="0" value="120"></div>
-<div class="field"><label>Chi phí phụ / sản phẩm (đ)</label><input id="extras" type="number" min="0" value="1000"></div>
-<div class="field"><label>Nhân công / sản phẩm (đ)</label><input id="labor" type="number" min="0" value="2000"></div>
-<div class="field"><label>Khấu hao máy (đ/giờ)</label><input id="depreciation" type="number" min="0" value="2000"></div>
-<div class="field"><label>Tỷ lệ lỗi / hao hụt (%)</label><input id="failure" type="number" min="0" max="90" step="0.5" value="5"></div>
+<div class="field"><label>Công suất trung bình (W)</label><input id="watts" type="number" min="0" value="1500"></div>
+<div class="field"><label>Chi phí phụ / sản phẩm (đ)</label><input id="extras" type="number" min="0" value="3500"></div>
+<div class="field"><label>Nhân công / sản phẩm (đ)</label><input id="labor" type="number" min="0" value="1000"></div>
+<div class="field"><label>Khấu hao máy (đ/giờ)</label><input id="depreciation" type="number" min="0" value="2400"></div>
+<div class="field"><label>Tỷ lệ lỗi / hao hụt (%)</label><input id="failure" type="number" min="0" max="90" step="0.5" value="10"></div>
 <div class="field"><label>Số lượng sản xuất</label><input id="quantity" type="number" min="1" step="1" value="1"></div>
-<div class="field"><label>Phí cố định / đơn hàng (đ)</label><input id="fixedOrderFee" type="number" min="0" value="0"></div>
+<div class="field"><label>Phí cố định / đơn hàng (đ)</label><input id="fixedOrderFee" type="number" min="0" value="3000"></div>
 </div>
 <div class="actions"><button id="saveProductBtn">Lưu vào danh sách sản phẩm</button><button id="resetCalcBtn" class="secondary">Xóa form</button></div>
 <div class="note">Mẹo: nhập khối lượng và thời gian từ Bambu Studio. Công suất điện nên dùng mức trung bình thực tế, không phải công suất cực đại.</div>
 </div>
 <div class="card span-5"><h2>Phí bán hàng & mục tiêu</h2>
 <div class="fieldgrid">
-<div class="field"><label>Phí sàn (%)</label><input id="platformFee" type="number" min="0" max="100" step="0.1" value="10"></div>
-<div class="field"><label>Phí thanh toán / dịch vụ (%)</label><input id="paymentFee" type="number" min="0" max="100" step="0.1" value="5"></div>
+<div class="field"><label>Phí sàn (%)</label><input id="platformFee" type="number" min="0" max="100" step="0.1" value="9"></div>
+<div class="field"><label>Phí thanh toán / dịch vụ (%)</label><input id="paymentFee" type="number" min="0" max="100" step="0.1" value="0"></div>
 <div class="field"><label>Quảng cáo / voucher (% giá bán)</label><input id="adsFee" type="number" min="0" max="100" step="0.1" value="0"></div>
 <div class="field"><label>Thuế / chi phí theo doanh thu (%)</label><input id="taxFee" type="number" min="0" max="100" step="0.1" value="0"></div>
-<div class="field"><label>Lợi nhuận mục tiêu (% giá bán)</label><input id="targetMargin" type="number" min="0" max="90" step="1" value="30"></div>
+<div class="field"><label>Lợi nhuận mục tiêu (% giá bán)</label><input id="targetMargin" type="number" min="0" max="90" step="1" value="20"></div>
 <div class="field"><label>Giá bán thực tế (đ, tùy chọn)</label><input id="actualPrice" type="number" min="0" placeholder="Để trống = giá đề xuất"></div>
 </div>
 <div class="note">Phí sàn thay đổi theo ngành hàng, chương trình và thời điểm. Hãy nhập tổng tỷ lệ thực tế của tài khoản; app không tự lấy phí Shopee trực tuyến.</div>
@@ -58,7 +58,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div class="card span-12"><h2>In nhiều màu — Bambu Lab A1 Combo + AMS Lite</h2>
 <div class="fieldgrid">
 <div class="field"><label>Cách nhập vật liệu</label><select id="filamentMode"><option value="detail">Tính chi tiết từng màu + purge + prime tower + support</option><option value="slicer">Dùng tổng gram từ Bambu Studio (đã gồm purge / tower / support)</option></select></div>
-<div class="field"><label>Hao hụt vật liệu bổ sung (%)</label><input id="materialWaste" type="number" min="0" max="100" step="0.5" value="2"></div>
+<div class="field"><label>Hao hụt vật liệu bổ sung (%)</label><input id="materialWaste" type="number" min="0" max="100" step="0.5" value="0"></div>
 <div class="field"><label>Gram purge / flushing</label><input id="purgeGrams" type="number" min="0" step="0.1" value="8"></div>
 <div class="field"><label>Vật liệu dùng cho purge</label><select id="purgeMaterial"></select></div>
 <div class="field"><label>Gram prime tower</label><input id="towerGrams" type="number" min="0" step="0.1" value="3"></div>
@@ -86,7 +86,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 <div class="metric"><div class="label">Chi phí filament</div><strong id="filamentOut">—</strong></div>
 <div class="metric"><div class="label">Chi phí điện</div><strong id="electricOut">—</strong></div>
 <div class="metric"><div class="label">Tổng chi phí đơn</div><strong id="orderOut">—</strong></div>
-<div class="metric"><div class="label">Lợi nhuận toàn đơn</div><strong id="totalProfitOut">—</strong></div>
+<div class="metric"><div class="label">Lợi nhuận toàn đơn</div><strong id="totalProfitOut">—</strong></div><div class="metric"><div class="label">Giá bán lẻ (biên mục tiêu 20%)</div><strong id="retailPriceOut">—</strong></div><div class="metric"><div class="label">Giá bán sỉ (biên mục tiêu 8%)</div><strong id="wholesalePriceOut">—</strong></div>
 </div>
 <div class="tablewrap" style="margin-top:14px"><table><tbody id="breakdown"></tbody></table></div>
 <div class="actions"><button id="exportCsvBtn" class="secondary">Xuất bảng tính CSV</button></div>
@@ -100,9 +100,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 10px}
 </div><div class="actions"><button id="saveMaterialBtn">Lưu vật liệu</button><button id="cancelMaterialBtn" class="secondary">Làm mới</button></div></div>
 <div class="card span-7"><h2>Kho vật liệu</h2><div class="tablewrap"><table><thead><tr><th>Vật liệu</th><th class="num">Giá/cuộn</th><th class="num">Giá/g</th><th>Thao tác</th></tr></thead><tbody id="materialsTable"></tbody></table></div></div></div></section>
 <section id="settings" class="panel"><div class="grid"><div class="card span-6"><h2>Cài đặt chung</h2><div class="fieldgrid">
-<div class="field"><label>Giá điện (đ/kWh)</label><input id="electricityRate" type="number" min="0" value="3000"></div>
+<div class="field"><label>Giá điện (đ/kWh)</label><input id="electricityRate" type="number" min="0" value="3000"></div><div class="field"><label>Biên lợi nhuận bán lẻ (%)</label><input id="retailMargin" type="number" min="0" max="90" value="20"></div><div class="field"><label>Biên lợi nhuận bán sỉ (%)</label><input id="wholesaleMargin" type="number" min="0" max="90" value="8"></div><div class="field"><label>Giá máy (đ)</label><input id="machinePrice" type="number" min="0" value="12000000"></div><div class="field"><label>Tuổi thọ máy (giờ in)</label><input id="machineLifetime" type="number" min="1" value="5000"></div><div class="field"><label>Lương nhân công (đ/giờ)</label><input id="laborRate" type="number" min="0" value="12000"></div><div class="field"><label>Thời gian hậu kỳ (phút)</label><input id="postMinutes" type="number" min="0" value="5"></div><div class="field"><label>Vật tư phụ (đ/sản phẩm)</label><input id="consumablesCost" type="number" min="0" value="2500"></div><div class="field"><label>Bao bì (đ/sản phẩm)</label><input id="packagingCost" type="number" min="0" value="1000"></div>
 <div class="field"><label>Máy in</label><input value="Bambu Lab A1 Combo" disabled></div>
-</div><div class="actions"><button id="saveSettingsBtn">Lưu cài đặt</button></div><p class="muted">Giá điện dùng để tính: công suất (W) × thời gian (giờ) ÷ 1000 × giá điện.</p></div>
+</div><div class="actions"><button id="saveSettingsBtn">Lưu cài đặt</button><button id="applyDefaultsBtn" class="secondary">Áp dụng mặc định vào form tính</button></div><p class="muted">Giá điện dùng để tính: công suất (W) × thời gian (giờ) ÷ 1000 × giá điện.</p></div>
 <div class="card span-6"><h2>Sao lưu & riêng tư</h2><p>Dữ liệu được lưu cục bộ trong trình duyệt bằng localStorage; không gửi lên máy chủ. Nếu xóa dữ liệu trình duyệt hoặc đổi trình duyệt/máy tính, dữ liệu có thể mất.</p><div class="actions"><button id="exportBtn2" class="secondary">Tải bản sao lưu JSON</button><button id="clearDataBtn" class="danger">Xóa toàn bộ dữ liệu</button></div></div></div></section>
 <footer>3D Print Cost Calculator · PWA · Dữ liệu lưu cục bộ trên thiết bị · Phí bán hàng và chi phí do người dùng nhập.<br><span id="pwaStatus">Đang kiểm tra chế độ ngoại tuyến…</span></footer>
 </div>
